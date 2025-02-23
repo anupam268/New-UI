@@ -11,7 +11,7 @@ const AnomalyChart = () => {
     labels: data.anomalySplit.map(item => item.category),
     datasets: [{
       data: data.anomalySplit.map(item => item.value),
-      backgroundColor: ["#ff4500", "#007bff", "#28a745"],
+      backgroundColor: ["#4CAF50", "#FFB74D", "#E57373"],
       hoverOffset: 10,
     }],
   };

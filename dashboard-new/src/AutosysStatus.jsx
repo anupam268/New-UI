@@ -6,8 +6,8 @@ import { Chart, ArcElement, Tooltip as ChartTooltip, Legend, BarElement, Categor
 Chart.register(ArcElement, ChartTooltip, Legend, BarElement, CategoryScale, LinearScale);
 
 const themeColors = {
-    success: "#2E7D32",
-    failure: "#D32F2F",
+    success: "#4CAF50",
+    failure: "#E57373",
     background: "#f9f9f9",
 };
 

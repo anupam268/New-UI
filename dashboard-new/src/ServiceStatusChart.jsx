@@ -16,9 +16,9 @@ const ServiceStatusChart = () => {
   });
 
   const statusColors = {
-    Good: "#388E3C",
-    Warning: "#FFA000",
-    Critical: "#D32F2F",
+    Good: "#4CAF50",
+    Warning: "#FFB74D",
+    Critical: "#E57373",
   };
 
   // ✅ Sort services based on user selection
@@ -72,7 +72,7 @@ const ServiceStatusChart = () => {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", p:1 }}>
       <Typography variant="h6" gutterBottom>Service Wise Status</Typography>
 
       <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
@@ -94,14 +94,14 @@ const ServiceStatusChart = () => {
           {sortOrder === "asc" ? "Sort Descending" : "Sort Ascending"}
         </Button>
 
-        <Button 
+        {/* <Button 
           variant="outlined"
           size="small"
           onClick={resetSortOrder} // ✅ Reset Sorting
           startIcon={<RestartAltIcon />}
         >
           Reset Sorting
-        </Button>
+        </Button> */}
       </Box>
 
       {view === "badges" ? (
