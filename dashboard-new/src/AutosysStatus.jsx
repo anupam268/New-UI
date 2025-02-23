@@ -41,9 +41,26 @@ const AutosysStatus = ({ data = {} }) => {
         indexAxis: "y",
         plugins: {
             legend: { display: false },
-            tooltip: { enabled: true },
+            tooltip: {
+                enabled: true,
+                callbacks: {
+                    label: function (tooltipItem) {
+                        return `${tooltipItem.raw}%`; // ✅ Show percentage on hover
+                    },
+                },
+            },
         },
         responsive: true,
+        scales: {
+            x: {
+                ticks: {
+                    callback: function (value) {
+                        return `${value}%`; // ✅ Show percentage on x-axis
+                    },
+                },
+                grid: { display: false }, // ✅ Hide grid lines for cleaner look
+            },
+        },
         maintainAspectRatio: false,
     };
 
@@ -58,7 +75,7 @@ const AutosysStatus = ({ data = {} }) => {
           </Typography>
         </Box>
       </Box> */}
-            <Box sx={{ width: "100%", mx: "auto", maxHeight:"100px" }}>
+            <Box sx={{ width: "100%", mx: "auto", maxHeight: "100px" }}>
                 <Bar data={chartData} options={options} />
             </Box>
 
