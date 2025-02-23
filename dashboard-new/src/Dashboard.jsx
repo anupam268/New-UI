@@ -182,7 +182,7 @@ const AnomalyDetailsTable = () => {
 const cardStyle = {
     boxShadow: 3,
     bgcolor: themeColors.cardBackground,
-    minHeight: "400px", // ✅ Ensures all cards have the same height
+    minHeight: "300px", // ✅ Ensures all cards have the same height
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
@@ -219,7 +219,8 @@ const Dashboard = () => {
                     {/* Autosys Status */}
                     <Grid item xs={12} md={4}>
                         <Card sx={cardStyle}>
-                            <AutosysStatus />
+                            <Typography variant="h6" gutterBottom>Autosys Status</Typography>
+                            <AutosysStatus data={data.autosysStatus} />
                         </Card>
                     </Grid>
                 </Grid>

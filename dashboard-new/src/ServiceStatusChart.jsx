@@ -72,7 +72,7 @@ const ServiceStatusChart = () => {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", p:1 }}>
+    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
       <Typography variant="h6" gutterBottom>Service Wise Status</Typography>
 
       <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
