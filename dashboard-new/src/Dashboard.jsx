@@ -13,7 +13,7 @@ Chart.register(ArcElement, Tooltip, Legend);
 // 📌 White Theme Colors
 const themeColors = {
     background: "#ffffff",
-    cardBackground: "#f9f9f9",
+    cardBackground: "#F5F7FA",
     textPrimary: "#333333",
     success: "#28a745",
     warning: "#ffc107",
@@ -182,11 +182,12 @@ const AnomalyDetailsTable = () => {
 const cardStyle = {
     boxShadow: 3,
     bgcolor: themeColors.cardBackground,
-    minHeight: "300px", // ✅ Ensures all cards have the same height
+    minHeight: "25vh", // ✅ Ensures all cards have the same height
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "center",
+    p:1,
 };
 
 // 📌 Dashboard Component

@@ -21,6 +21,13 @@ const ServiceStatusChart = () => {
     Critical: "#E57373",
   };
 
+  const themeColors = {
+    textPrimary: "#222222", // ✅ Darker for better contrast
+    textSecondary: "#444444", // ✅ Medium-dark for descriptions
+    heading: "#e0dede", // ✅ Slightly bolder black
+  };
+  
+
   // ✅ Sort services based on user selection
   const sortedServices = [...data.serviceStatus].sort((a, b) => {
     const order = { Good: 1, Warning: 2, Critical: 3 };
@@ -114,13 +121,15 @@ const ServiceStatusChart = () => {
                   color: "#FFFFFF",
                   padding: "6px 12px",
                   fontWeight: "bold",
+                  color:themeColors.heading,
                   borderRadius: "8px",
                   textAlign: "center",
-                  boxShadow: "0px 2px 4px rgba(0,0,0,0.1)",
+                  boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.1)", // ✅ Soft shadow
+                  textShadow: "0px 1px 2px rgba(0,0,0,0.2)", // ✅ Slight shadow for sharper text
                   transition: "transform 0.2s ease-in-out, box-shadow 0.2s",
                   "&:hover": {
                     transform: "scale(1.05)",
-                    boxShadow: "0px 5px 8px rgba(0,0,0,0.2)",
+                    boxShadow: "0px 5px 10px rgba(0, 0, 0, 0.2)", // ✅ Slight lift on hover
                   },
                 }}
               >
