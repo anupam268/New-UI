@@ -16,9 +16,9 @@ const ServiceStatusChart = () => {
   });
 
   const statusColors = {
-    Good: "#4CAF50",
-    Warning: "#FFB74D",
-    Critical: "#E57373",
+    Good: "#2E7D32",  // ✅ Dark Green
+    Warning: "#FF9800",  // ✅ Orange
+    Critical: "#D32F2F",  // ✅ Red
   };
 
   const themeColors = {
@@ -112,32 +112,30 @@ const ServiceStatusChart = () => {
       </Box>
 
       {view === "badges" ? (
-        <Grid container spacing={1} justifyContent="center">
-          {sortedServices.map((service, index) => (
-            <Grid item xs={6} sm={4} md={3} key={index}> {/* ✅ Multiple services per row */}
-              <Box
-                sx={{
-                  background: statusColors[service.status],
-                  color: "#FFFFFF",
-                  padding: "6px 12px",
-                  fontWeight: "bold",
-                  color:themeColors.heading,
-                  borderRadius: "8px",
-                  textAlign: "center",
-                  boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.1)", // ✅ Soft shadow
-                  textShadow: "0px 1px 2px rgba(0,0,0,0.2)", // ✅ Slight shadow for sharper text
-                  transition: "transform 0.2s ease-in-out, box-shadow 0.2s",
-                  "&:hover": {
-                    transform: "scale(1.05)",
-                    boxShadow: "0px 5px 10px rgba(0, 0, 0, 0.2)", // ✅ Slight lift on hover
-                  },
-                }}
-              >
-                {service.name}
-              </Box>
-            </Grid>
-          ))}
-        </Grid>
+<Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, justifyContent: "center" }}>
+      {sortedServices.map((service, index) => (
+        <Box
+          key={index}
+          sx={{
+            background: "#f9f9f9", // ✅ Uniform color for all boxes
+            color: "#222",
+            padding: "8px 16px",
+            fontWeight: "bold",
+            borderRadius: "8px",
+            borderTop: `4px solid ${statusColors[service.status]}`, // ✅ Thin colored top border
+            textAlign: "center",
+            boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+            transition: "transform 0.2s ease-in-out, box-shadow 0.2s",
+            "&:hover": {
+              transform: "scale(1.05)",
+              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)", // ✅ Slight hover effect
+            },
+          }}
+        >
+          {service.name}
+        </Box>
+      ))}
+    </Box>
       ) : (
         <Box sx={{ width: "100%", maxWidth: 400 }}>
           <Bar data={chartData} options={options} />
