@@ -182,11 +182,12 @@ const AnomalyDetailsTable = () => {
 const cardStyle = {
     boxShadow: 3,
     bgcolor: themeColors.cardBackground,
-    minHeight: "25vh", // ✅ Ensures all cards have the same height
+    // minHeight: "35vh", // ✅ Ensures all cards have the same height
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "stretch",
+    height: "100%",
     p:1,
 };
 

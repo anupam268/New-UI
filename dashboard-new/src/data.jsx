@@ -8,7 +8,7 @@ const data = {
       },
       
     anomalySplit: [
-      { category: "Monitoring", value: 30 },
+      { category: "Monitoring", value: 38 },
       { category: "Logging", value: 35 },
       { category: "Combined", value: 25 },
     ],
