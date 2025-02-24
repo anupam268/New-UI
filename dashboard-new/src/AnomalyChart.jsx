@@ -7,9 +7,9 @@ import data from "./data";
 Chart.register(ArcElement, Tooltip, Legend);
 
 const themeColors = {
-  monitoring: "#2E7D32",  // ✅ Dark Green
-  logging: "#FF9800",  // ✅ Orange
-  combined: "#1565C0",  // ✅ Deep Blue
+  monitoring: "#b9d2fa",  // ✅ Dark Green
+  logging: "#476596",  // ✅ Orange
+  combined: "#053582",  // ✅ Deep Blue
 };
 
 const AnomalyChart = () => {
@@ -101,9 +101,9 @@ const AnomalyChart = () => {
           <Typography variant="h4" sx={{ fontWeight: "bold", color: "#222", lineHeight: "1" }}>
             {animatedCount}
           </Typography>
-          <Typography variant="caption" sx={{ fontSize: "11px", color: "#666" }}>
+          {/* <Typography variant="caption" sx={{ fontSize: "11px", color: "#666" }}>
             Total Anomalies
-          </Typography>
+          </Typography> */}
         </Box>
       </Box>
     </Box>
