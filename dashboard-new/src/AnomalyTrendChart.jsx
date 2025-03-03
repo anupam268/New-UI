@@ -90,8 +90,8 @@ const AnomalyTrendChart = () => {
             padding: "8px 16px",
             border: "none",
             cursor: "pointer",
-            backgroundColor: activeView === "active" ? "#007bff" : "white",
-            color: activeView === "active" ? "white" : "#007bff",
+            backgroundColor: activeView === "active" ? "#1976d2" : "white",
+            color: activeView === "active" ? "white" : "#1976d2",
             borderRadius: "4px",
             fontWeight: "bold",
           }}
@@ -104,8 +104,8 @@ const AnomalyTrendChart = () => {
             padding: "8px 16px",
             border: "none",
             cursor: "pointer",
-            backgroundColor: activeView === "historical" ? "#007bff" : "white",
-            color: activeView === "historical" ? "white" : "#007bff",
+            backgroundColor: activeView === "historical" ? "#1976d2" : "white",
+            color: activeView === "historical" ? "white" : "#1976d2",
             borderRadius: "4px",
             fontWeight: "bold",
           }}
