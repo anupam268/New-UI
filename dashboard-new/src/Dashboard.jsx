@@ -7,6 +7,7 @@ import AnomalyChart from "./AnomalyChart";
 import ServiceStatusChart from "./ServiceStatusChart";
 import AutosysStatus from "./AutosysStatus";
 import AnomalyDetailsTable from "./AnomalyDetailsTable";
+import AnomalyTrendChart from "./AnomalyTrendChart";
 import data from "./data";
 
 Chart.register(ArcElement, Tooltip, Legend);
@@ -48,7 +49,7 @@ const cardStyle = {
     justifyContent: "space-between",
     alignItems: "stretch",
     height: "100%",
-    p:1,
+    p: 1,
 };
 
 // 📌 Dashboard Component
@@ -89,10 +90,14 @@ const Dashboard = () => {
 
 
 
-                {/* Anomaly Details Table */}
+                {/* Anomaly Details Table
                 <Grid item xs={12}>
                     <AnomalyDetailsTable />
+                </Grid> */}
+                <Grid item xs={12}>
+                    <AnomalyTrendChart />
                 </Grid>
+
             </Grid>
         </Container>
     );
