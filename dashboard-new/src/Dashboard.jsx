@@ -78,14 +78,6 @@ const Dashboard = () => {
                             <ServiceStatusChart />
                         </Card>
                     </Grid>
-
-                    {/* Autosys Status */}
-                    <Grid item xs={12} md={4}>
-                        <Card sx={cardStyle}>
-                            <Typography variant="h6" gutterBottom>Autosys Status</Typography>
-                            <AutosysStatus data={data.autosysStatus} />
-                        </Card>
-                    </Grid>
                 </Grid>
 
 
