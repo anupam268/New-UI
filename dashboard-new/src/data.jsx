@@ -22,8 +22,8 @@ const data = {
     { name: "Service 7", status: "Good" },
   ],
   autosysStatus: {
-    successRate: "92%",
-    failureRate: "8%",
+    successRate: "92",
+    failureRate: "8",
     failedServers: ["Server XYZ", "Server ABC", "Server 123", "Server DEF"],
   },
   anomalyDetails: [
