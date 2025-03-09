@@ -27,21 +27,18 @@ const data = {
     failedServers: ["Server XYZ", "Server ABC", "Server 123", "Server DEF"],
   },
   anomalyDetails: [
-    // More points in 0-1 Hrs range (Active)
-    { time: 0.08, monitoring: 5, logging: 1, combined: 0 }, // 5 min
-    { time: 0.16, monitoring: 8, logging: 2, combined: 1 }, // 10 min
-    { time: 0.25, monitoring: 12, logging: 3, combined: 1 }, // 15 min
-    { time: 0.33, monitoring: 15, logging: 4, combined: 2 }, // 20 min
-    { time: 0.41, monitoring: 20, logging: 5, combined: 3 }, // 25 min
-    { time: 0.50, monitoring: 25, logging: 6, combined: 4 }, // 30 min
-    { time: 0.58, monitoring: 30, logging: 8, combined: 5 }, // 35 min
-    { time: 0.66, monitoring: 35, logging: 9, combined: 6 }, // 40 min
-    { time: 0.75, monitoring: 40, logging: 10, combined: 7 }, // 45 min
-    { time: 0.83, monitoring: 45, logging: 12, combined: 8 }, // 50 min
-    { time: 0.91, monitoring: 50, logging: 13, combined: 9 }, // 55 min
-    { time: 1.00, monitoring: 55, logging: 14, combined: 10 }, // 1 hour boundary
-
-    // ✅ Historical (1-48 Hrs) → Every 1 hour
+    { time: 0.08, monitoring: 5, logging: 1, combined: 0 },
+    { time: 0.16, monitoring: 8, logging: 2, combined: 1 },
+    { time: 0.25, monitoring: 12, logging: 3, combined: 1 },
+    { time: 0.33, monitoring: 15, logging: 4, combined: 2 },
+    { time: 0.41, monitoring: 20, logging: 5, combined: 3 },
+    { time: 0.50, monitoring: 25, logging: 6, combined: 4 },
+    { time: 0.58, monitoring: 30, logging: 8, combined: 5 },
+    { time: 0.66, monitoring: 35, logging: 9, combined: 6 },
+    { time: 0.75, monitoring: 40, logging: 10, combined: 7 },
+    { time: 0.83, monitoring: 45, logging: 12, combined: 8 },
+    { time: 0.91, monitoring: 50, logging: 13, combined: 9 },
+    { time: 1.00, monitoring: 55, logging: 14, combined: 10 },
     { time: 2, monitoring: 60, logging: 15, combined: 11 },
     { time: 3, monitoring: 62, logging: 16, combined: 12 },
     { time: 4, monitoring: 65, logging: 18, combined: 13 },
@@ -54,6 +51,18 @@ const data = {
     { time: 36, monitoring: 100, logging: 34, combined: 26 },
     { time: 42, monitoring: 105, logging: 35, combined: 28 },
     { time: 48, monitoring: 110, logging: 38, combined: 30 },
+  ],
+  trendingKeywords: [
+    { keyword: "Cluster 1", frequency: 40, category: "clusterA" },
+    { keyword: "Cluster 2", frequency: 50, category: "clusterB" },
+    { keyword: "Cluster 3", frequency: 30, category: "clusterA" },
+    { keyword: "Cluster 4", frequency: 70, category: "clusterC" },
+    { keyword: "Cluster 5", frequency: 20, category: "clusterA" },
+    { keyword: "Cluster 6", frequency: 80, category: "clusterB" },
+    { keyword: "Cluster 7", frequency: 25, category: "clusterC" },
+    { keyword: "Cluster 8", frequency: 60, category: "clusterB" },
+    { keyword: "Cluster 9", frequency: 45, category: "clusterC" },
+    { keyword: "Cluster 10", frequency: 55, category: "clusterA" },
   ],
 };
 
