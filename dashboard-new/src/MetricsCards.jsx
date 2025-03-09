@@ -59,7 +59,7 @@ const MetricsCards = () => {
                 bgcolor: themeColors.cardBackground,
                 color: themeColors.textPrimary,
                 p: 1.5,
-                minHeight: "170px",
+                minHeight: "190px",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
@@ -67,10 +67,10 @@ const MetricsCards = () => {
               }}
             >
               <CardContent sx={{ textAlign: "center" }}>
-                <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
                   {key.replace(/([A-Z])/g, " $1").toUpperCase()}
                 </Typography>
-                <Box sx={{ width: 100, height: 50, mx: "auto", position: "relative" }}>
+                <Box sx={{ width: 80, height: 80, mx: "auto", position: "relative" }}>
                 {index === 0 ? ( // ✅ First card (Anomaly Servers) shows a number instead of percentage
                   <Typography variant="h3" sx={{ fontWeight: "bold", color: themeColors.primary }}>
                     {percentage}
@@ -103,7 +103,7 @@ const MetricsCards = () => {
               bgcolor: themeColors.cardBackground,
               color: themeColors.textPrimary,
               p: 1.5,
-              minHeight: "170px",
+              minHeight: "190px",
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
@@ -118,8 +118,8 @@ const MetricsCards = () => {
             onClick={() => setModalOpen(true)}
           >
             <CardContent sx={{ textAlign: "center" }}>
-              <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-                Autosys Status
+              <Typography variant="subtitle2" sx={{ fontWeight: "bold" }}>
+                AUTOSYS STATUS
               </Typography>
               <Box sx={{ width: 80, height: 80, mx: "auto", position: "relative" }}>
                 <Doughnut
@@ -135,9 +135,9 @@ const MetricsCards = () => {
                   plugins={[textCenterPlugin]}
                 />
               </Box>
-              <Typography variant="h7" sx={{ mt: 1 }}>
+              {/* <Typography variant="h7" sx={{ mt: 1 }}>
                 {data.autosysStatus.successRate}% Success
-              </Typography>
+              </Typography> */}
             </CardContent>
           </Card>
         </Grid>

@@ -75,8 +75,8 @@ const AnomalyChart = () => {
 
   return (
     <Box sx={{ textAlign: "center", p: 2, position: "relative" }}>
-      <Typography variant="h6" gutterBottom sx={{ fontWeight: "bold", color: "#222" }}>
-        Anomaly Split
+      <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: "bold", color: "#222" }}>
+        ANOMALY SPLIT
       </Typography>
 
       <Box sx={{ width: 220, height: 220, mx: "auto", position: "relative" }}>

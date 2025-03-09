@@ -80,7 +80,7 @@ const ServiceStatusChart = () => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", p:1 }}>
-      <Typography variant="h6" gutterBottom>Service Wise Status</Typography>
+      <Typography variant="subtitle1" gutterBottom sx={{fontWeight: "bold", color: "#222" }}>SERVICE WISE STATUS</Typography>
 
       <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
         <Button 

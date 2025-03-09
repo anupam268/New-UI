@@ -78,8 +78,8 @@ const AnomalyTrendChart = () => {
 
   return (
     <Box sx={{ textAlign: "center", p: 2 }}>
-      <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-        Anomaly Trend Over Time
+      <Typography variant="subtitle1" sx={{ fontWeight: "bold" , color: "#222" }}>
+        ANOMALIES TREND OVER TIME
       </Typography>
 
       {/* ✅ Toggle Buttons for Active/Historical View */}
