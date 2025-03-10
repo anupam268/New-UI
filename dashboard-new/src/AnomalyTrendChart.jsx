@@ -1,64 +1,89 @@
 import React, { useState } from "react";
 import { Box, Typography, Modal, Table, TableHead, TableRow, TableCell, TableBody } from "@mui/material";
 import { Line } from "react-chartjs-2";
-import { Chart, LineElement, PointElement, Tooltip, Legend, CategoryScale, LinearScale, Filler } from "chart.js";
+import { Chart, LineElement, PointElement, Tooltip, Legend, CategoryScale, LinearScale } from "chart.js";
 import data from "./data";
 
-Chart.register(LineElement, PointElement, Tooltip, Legend, CategoryScale, LinearScale, Filler);
-
-const themeColors = {
-  monitoring: "#b9d2fa",
-  logging: "#476596",
-  combined: "#053582",
-};
+Chart.register(LineElement, PointElement, Tooltip, Legend, CategoryScale, LinearScale);
 
 const AnomalyTrendChart = () => {
-  const [activeView, setActiveView] = useState("active"); // ✅ Defined inside the component
+  const [activeView, setActiveView] = useState("active");
   const [selectedPoint, setSelectedPoint] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState([]); // multiple selection allowed
 
-  // ✅ Fixing the Active Data Filter (0-1 Hrs)
+  // Filter data for active vs. historical views
   const activeData = data.anomalyDetails.filter((item) => item.time >= 0 && item.time <= 1);
-
-  // ✅ Fixing the Historical Data Filter (1-48 Hrs)
   const historicalData = data.anomalyDetails.filter((item) => item.time > 1 && item.time <= 48);
-
-  // ✅ Use `activeView` inside the component, not globally
   const filteredData = activeView === "active" ? activeData : historicalData;
 
+  // Determine opacity for each dataset based on selectedCategories.
+  // If none are selected, all opacities are 1.
+  const themeColors = {
+    monitoring: { bg: "rgba(25, 118, 210, 1)", border: "#1976d2" },
+    logging: { bg: "rgba(142, 36, 170, 1)", border: "#8e24aa" },
+    combined: { bg: "rgba(0, 137, 123, 1)", border: "#00897b" },
+  };
+  
+  const getOpacity = (label) =>
+    selectedCategories.length === 0 || selectedCategories.includes(label) ? 1 : 0.2;
+  
+  const allDatasets = [
+    {
+      label: "Monitoring",
+      data: filteredData.map((item) => item.monitoring),
+      backgroundColor: `rgba(25, 118, 210, ${getOpacity("Monitoring")})`,
+      borderColor: `rgba(25, 118, 210, ${getOpacity("Monitoring")})`,
+      borderWidth: 2,
+      fill: false,
+      // Optionally, set a different line dash style:
+      // borderDash: [],
+    },
+    {
+      label: "Logging",
+      data: filteredData.map((item) => item.logging),
+      backgroundColor: `rgba(142, 36, 170, ${getOpacity("Logging")})`,
+      borderColor: `rgba(142, 36, 170, ${getOpacity("Logging")})`,
+      borderWidth: 2,
+      fill: false,
+      // Example: dashed line
+      // borderDash: [5, 5],
+    },
+    {
+      label: "Combined",
+      data: filteredData.map((item) => item.combined),
+      backgroundColor: `rgba(0, 137, 123, ${getOpacity("Combined")})`,
+      borderColor: `rgba(0, 137, 123, ${getOpacity("Combined")})`,
+      borderWidth: 2,
+      fill: false,
+      // Example: dotted line
+      // borderDash: [2, 4],
+    },
+  ];
+  
+ 
+
   const chartData = {
-    labels: filteredData.map((item) => `${item.time}h`), // ✅ Fix Labels
-    datasets: [
-      {
-        label: "Monitoring",
-        data: filteredData.map((item) => item.monitoring),
-        backgroundColor: "rgba(185, 210, 250, 0.6)", // ✅ Light Blue
-        borderColor: "#b9d2fa",
-        borderWidth: 2,
-        fill: true,
-      },
-      {
-        label: "Logging",
-        data: filteredData.map((item) => item.logging),
-        backgroundColor: "rgba(71, 101, 150, 0.6)", // ✅ Dark Blue
-        borderColor: "#476596",
-        borderWidth: 2,
-        fill: true,
-      },
-      {
-        label: "Combined",
-        data: filteredData.map((item) => item.combined),
-        backgroundColor: "rgba(5, 53, 130, 0.6)", // ✅ Deep Blue
-        borderColor: "#053582",
-        borderWidth: 2,
-        fill: true,
-      },
-    ],
+    labels: filteredData.map((item) => `${item.time}h`),
+    datasets: allDatasets,
   };
 
+  // Legend onClick: toggle category in the selectedCategories array
   const options = {
     plugins: {
-      legend: { display: true, position: "top" },
+      legend: {
+        display: true,
+        position: "top",
+        onClick: (e, legendItem) => {
+          const clickedCategory = legendItem.text;
+          // Toggle selection: if already selected, remove it; otherwise, add it.
+          if (selectedCategories.includes(clickedCategory)) {
+            setSelectedCategories(selectedCategories.filter((cat) => cat !== clickedCategory));
+          } else {
+            setSelectedCategories([...selectedCategories, clickedCategory]);
+          }
+        },
+      },
       tooltip: {
         callbacks: {
           label: (tooltipItem) => `${tooltipItem.raw} anomalies`,
@@ -76,13 +101,18 @@ const AnomalyTrendChart = () => {
     },
   };
 
+  // For the modal table, show only selected categories if any; otherwise, show all.
+  const categoriesToShow =
+    selectedCategories.length > 0
+      ? selectedCategories
+      : ["Monitoring", "Logging", "Combined"];
+
   return (
     <Box sx={{ textAlign: "center", p: 2 }}>
-      <Typography variant="subtitle1" sx={{ fontWeight: "bold" , color: "#222" }}>
-        ANOMALIES TREND OVER TIME
+      <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+        Anomaly Trend Over Time
       </Typography>
-
-      {/* ✅ Toggle Buttons for Active/Historical View */}
+      {/* Toggle buttons for active/historical view */}
       <Box sx={{ mb: 2, display: "flex", justifyContent: "center", gap: 1 }}>
         <button
           onClick={() => setActiveView("active")}
@@ -113,13 +143,9 @@ const AnomalyTrendChart = () => {
           HISTORICAL (1-48 HRS)
         </button>
       </Box>
-
-      {/* ✅ Line Chart */}
       <Box sx={{ height: 300 }}>
         <Line data={chartData} options={options} />
       </Box>
-
-      {/* ✅ Modal to Show Table When Clicking a Point */}
       <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
         <Box
           sx={{
@@ -137,7 +163,6 @@ const AnomalyTrendChart = () => {
           <Typography variant="h6" sx={{ mb: 2 }}>
             Anomalies at {selectedPoint?.time} Hours
           </Typography>
-
           <Table>
             <TableHead>
               <TableRow>
@@ -146,18 +171,14 @@ const AnomalyTrendChart = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow>
-                <TableCell>Monitoring</TableCell>
-                <TableCell>{selectedPoint?.monitoring}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Logging</TableCell>
-                <TableCell>{selectedPoint?.logging}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Combined</TableCell>
-                <TableCell>{selectedPoint?.combined}</TableCell>
-              </TableRow>
+              {categoriesToShow.map((category) => (
+                <TableRow key={category}>
+                  <TableCell>{category}</TableCell>
+                  <TableCell>
+                    {selectedPoint ? selectedPoint[category.toLowerCase()] : "-"}
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </Box>

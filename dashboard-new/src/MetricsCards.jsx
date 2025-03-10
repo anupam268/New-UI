@@ -16,7 +16,7 @@ const themeColors = {
   primary: "#007bff",
 };
 
-// ✅ Custom Plugin for Percentage Display Inside Doughnut Chart
+// Custom Plugin for Percentage Display Inside Doughnut Chart
 const textCenterPlugin = {
   id: "textCenter",
   beforeDraw: (chart) => {
@@ -30,19 +30,32 @@ const textCenterPlugin = {
   },
 };
 
-// ✅ Function to Generate Gauge Chart Data
-const getGaugeChartData = (value) => ({
-  datasets: [
-    {
-      data: [value, 100 - value],
-      backgroundColor: [themeColors.primary, "#e0e0e0"],
-      borderWidth: 0,
-      cutout: "80%",
-      rotation: -90,
-      circumference: 180,
-    },
-  ],
-});
+// Helper function to get gradient color from red (0%) to green (100%)
+function getGradientColor(value) {
+  const clamped = Math.max(0, Math.min(100, value));
+  const t = clamped / 100; // normalized 0 to 1
+  const r = Math.round(255 * (1 - t)); // red decreases as value increases
+  const g = Math.round(255 * t);       // green increases as value increases
+  const b = 0;
+  return `rgb(${r}, ${g}, ${b})`;
+}
+
+// Function to generate gauge chart data using the gradient color
+const getGaugeChartData = (value) => {
+  const primaryColor = getGradientColor(value);
+  return {
+    datasets: [
+      {
+        data: [value, 100 - value],
+        backgroundColor: [primaryColor, "#e0e0e0"],
+        borderWidth: 0,
+        cutout: "80%",
+        rotation: -90,
+        circumference: 180,
+      },
+    ],
+  };
+};
 
 const MetricsCards = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -50,9 +63,8 @@ const MetricsCards = () => {
   return (
     <>
       <Grid container spacing={2} justifyContent="center">
-        {/* ✅ Keeping all six cards in the same row */}
         {Object.entries(data.metrics).map(([key, { percentage, description }], index) => (
-          <Grid item xs={12} sm={6} md={2} key={key}> {/* ✅ Fixing responsive layout */}
+          <Grid item xs={12} sm={6} md={2} key={key}>
             <Card
               sx={{
                 boxShadow: 3,
@@ -71,23 +83,24 @@ const MetricsCards = () => {
                   {key.replace(/([A-Z])/g, " $1").toUpperCase()}
                 </Typography>
                 <Box sx={{ width: 80, height: 80, mx: "auto", position: "relative" }}>
-                {index === 0 ? ( // ✅ First card (Anomaly Servers) shows a number instead of percentage
-                  <Typography variant="h3" sx={{ fontWeight: "bold", color: themeColors.primary }}>
-                    {percentage}
-                  </Typography>
-                ) : (
+                  {index === 0 ? (
+                    <Typography variant="h3" sx={{ fontWeight: "bold", color: themeColors.primary }}>
+                      {percentage}
+                    </Typography>
+                  ) : (
                     <Doughnut
-                    data={getGaugeChartData(percentage)}
-                    options={{
-                      responsive: true,
-                      maintainAspectRatio: false,
-                      cutoutPercentage: 80,
-                      plugins: {
-                        text: { displayText: `${percentage}%` },
-                      },
-                    }}
-                    plugins={[textCenterPlugin]}
-                  />)}
+                      data={getGaugeChartData(percentage)}
+                      options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutoutPercentage: 80,
+                        plugins: {
+                          text: { displayText: `${percentage}%` },
+                        },
+                      }}
+                      plugins={[textCenterPlugin]}
+                    />
+                  )}
                 </Box>
                 <Typography variant="h7" sx={{ mt: 1 }}>{description}</Typography>
               </CardContent>
@@ -95,7 +108,6 @@ const MetricsCards = () => {
           </Grid>
         ))}
 
-        {/* ✅ FIXED Autosys Status as a Metrics Card */}
         <Grid item xs={12} sm={6} md={2}> 
           <Card
             sx={{
@@ -135,15 +147,14 @@ const MetricsCards = () => {
                   plugins={[textCenterPlugin]}
                 />
               </Box>
-              {/* <Typography variant="h7" sx={{ mt: 1 }}>
+              <Typography variant="h7" sx={{ mt: 1 }}>
                 {data.autosysStatus.successRate}% Success
-              </Typography> */}
+              </Typography>
             </CardContent>
           </Card>
         </Grid>
       </Grid>
 
-      {/* ✅ Modal for Failed Servers */}
       <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
         <Box
           sx={{
