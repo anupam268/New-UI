@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Grid, Typography, Box } from "@mui/material";
 import MetricsCards from "./MetricsCards";
 import AnomalyChart from "./AnomalyChart";
@@ -19,6 +19,9 @@ const themeColors = {
 };
 
 const Dashboard = () => {
+  // Lift the anomaly filter state so both charts and the table share it.
+  const [selectedAnomalyCategories, setSelectedAnomalyCategories] = useState([]);
+
   return (
     <Container
       maxWidth="xl"
@@ -41,7 +44,7 @@ const Dashboard = () => {
             marginLeft: 2,
           }}
         >
-          {/* Anomaly Split */}
+          {/* Anomaly Split Chart */}
           <Box
             sx={{
               gridColumn: { xs: "1", md: "1" },
@@ -52,7 +55,10 @@ const Dashboard = () => {
               boxShadow: 2,
             }}
           >
-            <AnomalyChart />
+            <AnomalyChart
+              selectedCategories={selectedAnomalyCategories}
+              onCategoryChange={setSelectedAnomalyCategories}
+            />
           </Box>
 
           {/* Service Wise Status */}
@@ -96,14 +102,17 @@ const Dashboard = () => {
               height: "100%",
             }}
           >
-            <AnomalyTrendChart />
+            <AnomalyTrendChart
+              selectedCategories={selectedAnomalyCategories}
+              onCategoryChange={setSelectedAnomalyCategories}
+            />
           </Box>
         </Box>
       </Grid>
 
-      {/* New row: Anomaly Details Table always visible below the charts */}
+      {/* Anomaly Details Table filtered by the selected categories */}
       <Box sx={{ mt: 15 }}>
-        <AnomalyDetailsTable />
+        <AnomalyDetailsTable filterCategories={selectedAnomalyCategories} />
       </Box>
     </Container>
   );

@@ -6,20 +6,25 @@ import data from "./data";
 
 Chart.register(ArcElement, Tooltip, Legend);
 
-// Use the same colors as your anomaly trend chart:
+const themeColors = {
+  monitoring: "#1976d2", 
+  logging: "#8e24aa",    
+  combined: "#00897b",   
+};
+
 const categoryColorMap = {
-  Monitoring: "#1976d2", // medium blue
-  Logging: "#8e24aa",    // vibrant purple
-  Combined: "#00897b",   // rich teal
+  Monitoring: themeColors.monitoring,
+  Logging: themeColors.logging,
+  Combined: themeColors.combined,
 };
 
 const dimOpacity = 0.2;
 
-// Helper to convert hex to rgba string
+// Helper to convert hex to rgba
 function hexToRgba(hex, opacity) {
   hex = hex.replace("#", "");
   if (hex.length === 3) {
-    hex = hex.split("").map((x) => x + x).join("");
+    hex = hex.split("").map(x => x + x).join("");
   }
   const bigint = parseInt(hex, 16);
   const r = (bigint >> 16) & 255;
@@ -28,11 +33,8 @@ function hexToRgba(hex, opacity) {
   return `rgba(${r}, ${g}, ${b}, ${opacity})`;
 }
 
-const AnomalyChart = () => {
-  // Maintain multi-selection state via legend clicks
-  const [selectedCategories, setSelectedCategories] = useState([]);
-
-  // Total anomalies for the center count: sum only those segments that are selected (or all if none selected)
+const AnomalyChart = ({ selectedCategories, onCategoryChange }) => {
+  // Calculate total anomalies (sum only selected segments, or all if none selected)
   const totalAnomalies = data.anomalySplit.reduce((sum, item) => {
     if (selectedCategories.length === 0 || selectedCategories.includes(item.category))
       return sum + item.value;
@@ -55,13 +57,12 @@ const AnomalyChart = () => {
     return () => clearInterval(interval);
   }, [totalAnomalies]);
 
-  // Build chart data: always show all segments; if a category is not selected (and some are), dim it.
   const chartData = {
-    labels: data.anomalySplit.map((item) => item.category),
+    labels: data.anomalySplit.map(item => item.category),
     datasets: [
       {
-        data: data.anomalySplit.map((item) => item.value),
-        backgroundColor: data.anomalySplit.map((item) =>
+        data: data.anomalySplit.map(item => item.value),
+        backgroundColor: data.anomalySplit.map(item =>
           selectedCategories.length === 0 || selectedCategories.includes(item.category)
             ? categoryColorMap[item.category]
             : hexToRgba(categoryColorMap[item.category], dimOpacity)
@@ -70,11 +71,10 @@ const AnomalyChart = () => {
         borderColor: "#FFFFFF",
         cutout: "75%",
         hoverOffset: 10,
-      },
-    ],
+      }
+    ]
   };
 
-  // Chart options with custom legend onClick: toggles category selection.
   const options = {
     plugins: {
       legend: {
@@ -83,25 +83,25 @@ const AnomalyChart = () => {
         onClick: (e, legendItem) => {
           const clickedCategory = legendItem.text;
           if (selectedCategories.includes(clickedCategory)) {
-            setSelectedCategories(selectedCategories.filter((cat) => cat !== clickedCategory));
+            onCategoryChange(selectedCategories.filter(cat => cat !== clickedCategory));
           } else {
-            setSelectedCategories([...selectedCategories, clickedCategory]);
+            onCategoryChange([...selectedCategories, clickedCategory]);
           }
         },
         labels: {
           color: "#333",
-          font: { size: 12 },
-        },
+          font: { size: 12 }
+        }
       },
       tooltip: {
         enabled: true,
         callbacks: {
-          label: (tooltipItem) => `${tooltipItem.raw} anomalies`,
-        },
-      },
+          label: tooltipItem => `${tooltipItem.raw} anomalies`
+        }
+      }
     },
     responsive: true,
-    maintainAspectRatio: false,
+    maintainAspectRatio: false
   };
 
   return (
